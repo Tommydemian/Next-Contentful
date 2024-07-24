@@ -1,4 +1,5 @@
-import { HeroQuery, HeroBannerImgQuery } from "../types";
+import "server-only";
+import { HeroQuery, HeroBannerImgQuery, NavLinksQuery } from "../types";
 import { contentGQLFetcher } from "./fetch";
 
 export const getHeroContent = async () => {
@@ -48,6 +49,38 @@ export const getHeroImg = async () => {
     variables: {
       where: {
         description_contains: "hero",
+      },
+    },
+  });
+
+  if (!data) {
+    throw new Error("Failed to fetch");
+  }
+
+  return data;
+};
+
+export const getNavLinks = async () => {
+  const query = `#graphql 
+  query NavigationCollection($where: NavigationFilter) {
+    navigationCollection(where: $where) {
+      items {
+        linksCollection {
+          items {
+            ctaRedirectionValue
+            ctaText
+          }
+        }
+        headerNavigation
+      }
+    }
+  }`;
+
+  const data = contentGQLFetcher<NavLinksQuery>({
+    query,
+    variables: {
+      where: {
+        headerNavigation: "header_navigation",
       },
     },
   });

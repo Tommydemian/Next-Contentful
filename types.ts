@@ -25,6 +25,20 @@ export type HeroBannerImgQuery = {
   };
 };
 
+export type NavLinksQuery = {
+  navigationCollection: {
+    items: {
+      linksCollection: {
+        items: {
+          ctaRedirectionValue: string;
+          ctaText: string;
+        }[];
+      };
+      headerNavigation: string;
+    }[];
+  };
+};
+
 export type navLink = {
   text: string;
   href: string;

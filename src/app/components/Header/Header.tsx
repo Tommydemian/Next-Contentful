@@ -1,12 +1,18 @@
 import React from "react";
 import Image from "next/image";
 import styles from "./header.module.css";
+import { getNavLinks } from "../../../../content/queries";
 
 type HeaderProps = {
-  navLinks: { text: string; href: string }[];
+  navLinks: { ctaText: string; ctaRedirectionValue: string }[];
 };
 
-export const Header = ({ navLinks }: HeaderProps) => {
+export const Header = async ({ navLinks }: HeaderProps) => {
+  const data = await getNavLinks();
+  // fallback to navigation links from data
+  const links =
+    data?.navigationCollection.items[0].linksCollection.items || navLinks;
+
   return (
     <header className={styles.header}>
       <Image
@@ -18,9 +24,9 @@ export const Header = ({ navLinks }: HeaderProps) => {
       />
       <nav className={styles.mainNav}>
         <ul className={styles.navList}>
-          {navLinks?.map((navLink) => (
-            <li key={navLink.text}>
-              <a href={navLink.href}>{navLink.text}</a>
+          {links?.map((item) => (
+            <li key={item.ctaRedirectionValue}>
+              <a href={item.ctaRedirectionValue}>{item.ctaText}</a>
             </li>
           ))}
         </ul>
