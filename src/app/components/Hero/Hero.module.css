@@ -1,0 +1,11 @@
+.heroSection {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.heroImg {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 2/1;
+  grid-column: 1/-1;
+}
