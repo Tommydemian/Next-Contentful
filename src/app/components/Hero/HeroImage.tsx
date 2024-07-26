@@ -23,7 +23,8 @@ export const HeroImage = async ({
   const width = content.width || defaultWidth;
   const height = content.height || defaultHeight;
   const alt = content.title || defaultAlt;
-  const src = content.url || defaultSrc;
+  // const src = content.url || defaultSrc;
+  const src = defaultSrc;
 
   return (
     <Image

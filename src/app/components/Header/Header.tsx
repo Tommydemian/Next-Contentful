@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
-import styles from "./header.module.css";
 import { getNavLinks } from "../../../../content/queries";
+import { CTA } from "../CTA";
 
 type HeaderProps = {
   navLinks: { ctaText: string; ctaRedirectionValue: string }[];
@@ -14,16 +14,16 @@ export const Header = async ({ navLinks }: HeaderProps) => {
     data?.navigationCollection.items[0].linksCollection.items || navLinks;
 
   return (
-    <header className={styles.header}>
+    <header>
       <Image
-        className={styles.logo}
+        className="header-logo"
         src="https://ik.imagekit.io/2ziqnactl/luviankaLogo.png"
         alt="logo de la marca"
         width={895}
         height={458}
       />
-      <nav className={styles.mainNav}>
-        <ul className={styles.navList}>
+      <nav className="header-nav">
+        <ul className="header-navlist">
           {links?.map((item) => (
             <li key={item.ctaRedirectionValue}>
               <a href={item.ctaRedirectionValue}>{item.ctaText}</a>
@@ -31,6 +31,7 @@ export const Header = async ({ navLinks }: HeaderProps) => {
           ))}
         </ul>
       </nav>
+      <CTA text="Contactanos" href="/contactanos" />
     </header>
   );
 };

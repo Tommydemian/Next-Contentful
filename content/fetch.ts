@@ -12,10 +12,12 @@ export const contentGQLFetcher = async <T>({
   query,
   variables = {},
   preview = false,
+  tags = [],
 }: {
   query: string;
   variables?: Object;
   preview?: boolean;
+  tags?: string[];
 }): Promise<T | undefined> => {
   const res = await fetch(
     `https://graphql.contentful.com/content/v1/spaces/${process.env.CONTENTFUL_SPACE_ID}`,
@@ -29,6 +31,7 @@ export const contentGQLFetcher = async <T>({
           : `Bearer ${process.env.CONTENTFUL_ACCESS_TOKEN}`,
       },
       body: JSON.stringify({ query, variables }),
+      next: { tags, revalidate: 10 },
     }
   );
   const { data, errors } = await res.json();

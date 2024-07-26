@@ -21,7 +21,9 @@ export const getHeroContent = async () => {
 }
 `;
 
-  const data = await contentGQLFetcher<HeroQuery>({ query });
+  const data = await contentGQLFetcher<HeroQuery>({ query, tags: ["hero"] });
+  // create route /revalidate => revalidate ["hero"] => assign that route to a webhook on conentful when something gets published.
+  // if (something gets published) {webhook => hits endpoint /revalidate => revalidate}
 
   if (!data) {
     throw new Error("Failed to fetch");
